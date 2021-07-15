@@ -6,28 +6,29 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    # - name: Checkout
+    #   uses: actions/checkout@v2
     - name: Comment on new issue
       uses: actions/github-script@0.8.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const { readFileSync } = require("fs")
+          // const { readFileSync } = require("fs")
           github.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: readFileSync("./github/ISSUE_RESPONSES/comment.md", "utf8"),
+            // body: readFileSync(".github/ISSUE_RESPONSES/comment.md", "utf8"),
+            body: "🎉 You've created this issue comment using GitHub Script!!!",
           })
-    - name: Add issue to project board
-      if: contains(github.event.issue.labels.*.name, 'bug')
-      uses: actions/github-script@0.8.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.projects.createCard({
-            column_id: 15157402,
-            content_id: context.payload.issue.id,
-            content_type: "Issue",
-          })
+    # - name: Add issue to project board
+    #   if: contains(github.event.issue.labels.*.name, 'bug')
+    #   uses: actions/github-script@0.8.0
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       github.projects.createCard({
+    #         column_id: 15157402,
+    #         content_id: context.payload.issue.id,
+    #         content_type: "Issue",
+    #       })
